@@ -124,7 +124,7 @@ bot.command("/end_attendance", async (ctx) => {
     const workBook = reader.utils.book_new();
 
     reader.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
-    var writeStream = fs.createWriteStream(`temp/${nameFormatToSave}.xlsx`);
+    var writeStream = fs.createWriteStream(`/temp/${nameFormatToSave}.xlsx`);
     reader.writeFile(workBook, `temp/${nameFormatToSave}.xlsx`);
 
     var readStream = fs.createReadStream(`temp/${nameFormatToSave}.xlsx`);
