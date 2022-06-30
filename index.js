@@ -52,7 +52,7 @@ bot.command("/start_attendance", async (ctx) => {
     createdDate: day,
   });
   if (isValidMongoObject(foundDailyAttendance)) {
-    ctx.reply("Attendance already started \nDate:" + day);
+    return ctx.reply("Attendance already started \nDate:" + day);
   } else {
     const newDayAttendance = await new DailyAttendanceStatus({
       status: 1, //0:inactive,1:active
@@ -83,7 +83,7 @@ bot.command("/end_attendance", async (ctx) => {
   const attendendanceId = !!foundDailyAttendance && foundDailyAttendance._id || ""
 
   if (!isValidMongoObjectId(attendendanceId) || !isValidMongoObject(foundDailyAttendance)) {
-    ctx.reply("Attendance already ended \nDate:" + day);
+    return  ctx.reply("Attendance already ended \nDate:" + day);
   } else {
      const foundAttendance = await DailyRecord.find({
       createdDate: day,
@@ -157,7 +157,7 @@ bot.on("message", async (ctx) => {
 
   
     if (!isValidMongoObjectId(attendendanceId) || !isValidMongoObject(foundAttendanceStatus)) {
-      ctx.reply("Attendance not active \nDate:" + day);
+      return ctx.reply("Attendance not active \nDate:" + day);
     } else {
       if (!message.from.is_bot) {
         const firstname = message.from.first_name || "";
@@ -212,7 +212,7 @@ bot.on("message", async (ctx) => {
 
 
     if (!isValidMongoObjectId(attendendanceId) || !isValidMongoObject(foundAttendanceStatus)) {
-      ctx.reply("Attendance not active \nDate:" + day);
+      return ctx.reply("Attendance not active \nDate:" + day);
     } else {
       if (!message.from.is_bot) {
         const studentId = message.from.id || "";
