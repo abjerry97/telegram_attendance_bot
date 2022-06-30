@@ -15,7 +15,7 @@ const mongoose = require("mongoose");
 const dbHost = process.env.HOST || "localhost";
 const dbName = process.env.DATABASE_NAME || "attendance_bot";
 mongoose
-  .connect(`mongodb://${dbHost}:27017/${dbName}`, {
+  .connect(`${process.env.DATABASE_NAME_URI}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
