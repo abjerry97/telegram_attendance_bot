@@ -75,7 +75,7 @@ bot.command("/end_attendance", async (ctx) => {
   const createdOn = new Date();
   const day = new Date(message.date * 1000).toDateString();
 
-  const nameFormatToSave = (chatTitle +" "+ day).trim().split(" ").join("")
+  const nameFormatToSave = (chatTitle +" "+ day).trim().split(" ").join("_")
   const foundDailyAttendance = await DailyAttendanceStatus.findOne({
     status: 1,
     createdDate: day,
@@ -119,18 +119,16 @@ bot.command("/end_attendance", async (ctx) => {
     } catch (err) {
       console.log(err);
     }
-    var writeStream = fs.createWriteStream(`temp/${nameFormatToSave}.xlsx`);
-   
     const workSheet = reader.utils.json_to_sheet(reducedFoundAttendance);
 
     const workBook = reader.utils.book_new();
 
     reader.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
-
+    var writeStream = fs.createWriteStream(`temp/${nameFormatToSave}.xlsx`);
     reader.writeFile(workBook, `temp/${nameFormatToSave}.xlsx`);
 
     var readStream = fs.createReadStream(`temp/${nameFormatToSave}.xlsx`);
-    ctx.replyWithDocument({ source: readStream, filename: `temp/${nameFormatToSave}.xlsx` })
+    ctx.replyWithDocument({ source: readStream, filename: `temp/${nameFormatToSave}.xlsx` });
     ctx.reply("Attendance ended \nDate:" + day);
   }
 });
