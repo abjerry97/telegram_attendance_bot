@@ -125,10 +125,11 @@ bot.command("/end_attendance", async (ctx) => {
     const workBook = reader.utils.book_new();
 
     reader.utils.book_append_sheet(workBook, workSheet, "Sheet 1");
-    reader.writeFile(workBook, "temp/data.xlsx");
+    var writeStream = fs.createWriteStream(`temp/${nameFormatToSave}.xlsx`);
+    reader.writeFile(workBook, `temp/${nameFormatToSave}.xlsx`);
 
-    var readStream = fs.createReadStream("temp/data.xlsx");
-    ctx.replyWithDocument({ source: readStream, filename: "temp/data.xlsx" });
+    var readStream = fs.createReadStream(`temp/${nameFormatToSave}.xlsx`);
+    ctx.replyWithDocument({ source: readStream, filename: `temp/${nameFormatToSave}.xlsx` })
     ctx.reply("Attendance ended \nDate:" + day);
   }
 });
