@@ -75,6 +75,7 @@ bot.command("/end_attendance", async (ctx) => {
   const createdOn = new Date();
   const day = new Date(message.date * 1000).toDateString();
 
+  const nameFormatToSave = (chatTitle +" "+ day).trim().split(" ").join("_")
   const foundDailyAttendance = await DailyAttendanceStatus.findOne({
     status: 1,
     createdDate: day,
